@@ -1,0 +1,135 @@
+CONFIGURATION DE SW-DLA
+SW-DLA>enable
+SW-DLA#show running-config
+Building configuration...
+
+Current configuration : 4484 bytes
+!
+! Last configuration change at 14:11:17 UTC Sun Nov 1 2026
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SW-DLA
+!
+boot-start-marker
+boot-end-marker
+!
+no aaa new-model
+!
+ip arp inspection vlan 10,20,40,50,99
+!
+ip dhcp snooping vlan 10,20,40,50,99
+no ip dhcp snooping information option
+ip dhcp snooping
+ip cef
+no ip igmp snooping
+no ipv6 cef
+!
+spanning-tree mode rapid-pvst
+spanning-tree portfast edge default
+spanning-tree portfast edge bpduguard default
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+interface GigabitEthernet0/0
+ description LIEN-VERS-R-DLA
+ switchport trunk allowed vlan 10,20,40,50,99,998,999
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 998
+ switchport mode trunk
+ ip arp inspection trust
+ media-type rj45
+ negotiation auto
+ ip dhcp snooping trust
+!
+interface GigabitEthernet0/1
+ description PC-GUICHET
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security mac-address sticky
+ switchport port-security mac-address sticky 0050.7966.6805
+ switchport port-security
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ description CLIENT-DLA
+ switchport mode access
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ description CAMERA-HALL
+ switchport mode access
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ description SERVEUR-RADIUS
+ switchport mode access
+ switchport nonegotiate
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet2/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/3
+ media-type rj45
+ negotiation auto
+!
+interface Vlan99
+ ip address 10.20.99.2 255.255.255.0
+!
+ip default-gateway 10.20.99.1
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+control-plane
+!
